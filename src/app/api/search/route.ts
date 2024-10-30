@@ -27,7 +27,12 @@ async function generateSearchQueries(query: string): Promise<string[]> {
       ]
     });
 
-    return response.choices[0].message.content.split('\n').filter(q => q.trim());
+    const content = response.choices[0].message.content;
+    if (content) {
+      return content.split('\n').filter(q => q.trim());
+    } else {
+      return [query];
+    }
   } catch (error) {
     console.error('Error generating queries:', error);
     return [query];
@@ -169,7 +174,7 @@ async function synthesizeInformation(query: string, sources: SearchResult[]): Pr
       ]
     });
 
-    return [response.choices[0].message.content, citations];
+    return [response.choices[0].message.content ?? 'No content available', citations];
   } catch (error) {
     console.error('Error synthesizing information:', error);
     return ['Error synthesizing information.', []];
