@@ -5,6 +5,7 @@ import { SearchResult } from '@/types/search';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
+  
 });
 
 const HEADERS = {
